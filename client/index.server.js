@@ -16,13 +16,15 @@ import { routes } from './routes';
 
 import App from './App';
 
-const renderToHtml = (url, store, routerCtx = {}) => {
+const renderToHtml = (url, store, routerCtx = {}, sheets) => {
   return ReactDOMServer.renderToString(
-    <Provider store={store}>
-      <StaticRouter location={url} context={routerCtx}>
-        <App />
-      </StaticRouter>
-    </Provider>
+    sheets.collect(
+      <Provider store={store}>
+        <StaticRouter location={url} context={routerCtx}>
+          <App />
+        </StaticRouter>
+      </Provider>
+    )
   );
 };
 

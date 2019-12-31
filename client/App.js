@@ -8,6 +8,10 @@ import { bindActionCreators } from 'redux';
 
 import ClipboardJS from 'clipboard';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
 import './component/i18n';
 
 import { navTo, setCommonState, showToast } from './module/common/action';
@@ -19,6 +23,12 @@ import { routes } from './routes';
 import * as style from './style.scss';
 
 import Commons from './component/commons';
+
+const theme = createMuiTheme({
+  overrides: {},
+  palette: {},
+  typography: {}
+});
 
 class App extends Component {
   static mapState = ({ common: { redirectTo } }) => ({
@@ -47,6 +57,12 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const jssStyles = document.querySelector('#jss-server-side');
+
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+
     new ClipboardJS('.copy').on('success', () => {
       this.props.showToast({ msg: '已复制' });
     });
@@ -59,11 +75,14 @@ class App extends Component {
       <div className={style.container}>
         {redirectTo ? <Redirect to={redirectTo} /> : null}
         <Commons />
-        <Switch>
-          {this.state.routes.map(({ path, Component: C, key }) => (
-            <Route exact key={key || path} path={path} component={C} />
-          ))}
-        </Switch>
+        <CssBaseline />
+        <ThemeProvider theme={theme}>
+          <Switch>
+            {this.state.routes.map(({ path, Component: C, key }) => (
+              <Route exact key={key || path} path={path} component={C} />
+            ))}
+          </Switch>
+        </ThemeProvider>
       </div>
     );
   }

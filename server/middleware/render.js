@@ -1,3 +1,5 @@
+const { ServerStyleSheets } = require('@material-ui/core/styles');
+
 const { createMemoryHistory } = require('history');
 
 const {
@@ -16,6 +18,8 @@ module.exports = (useServerRender = true) => {
 
   return async (ctx, next) => {
     const state = {};
+
+    const sheets = new ServerStyleSheets();
 
     const history = createMemoryHistory();
 
@@ -43,7 +47,7 @@ module.exports = (useServerRender = true) => {
 
       const routerCtx = {};
 
-      const html = renderToHtml(ctx.url, store, routerCtx);
+      const html = renderToHtml(ctx.url, store, routerCtx, sheets);
 
       // there's a redirect action triggered from saga
       if (routerCtx.url) {
@@ -57,7 +61,8 @@ module.exports = (useServerRender = true) => {
       // wait for the promise's return
       await ctx.render('index.generated', {
         html,
-        state: store.getState()
+        state: store.getState(),
+        styles: sheets.toString()
       });
 
       return null;
