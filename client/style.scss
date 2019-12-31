@@ -1,0 +1,6 @@
+//reset ico-moon icon's color style
+//reset icon color
+[class^='icon-']::before,
+[class*=' icon-']::before {
+  color: currentColor;
+}
