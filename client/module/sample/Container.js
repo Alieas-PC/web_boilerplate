@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
-import connect from '@module/common/base';
+
 import { Button, Box, Typography } from '@material-ui/core';
+
+import connect from '../common/base';
+
 import actions from './action';
 
 import style from './style.scss';
 
 class Container extends Component {
-  static title = 'Sample';
-  static mapState = state => ({
-    ...state.module.sample,
-    isLoading: state.common.loadings.has('sample')
-  });
-  static mapDispatch = {
-    ...actions
-  };
-
   navTo = path => () => {
     this.props.navTo({ path });
   };
@@ -38,4 +32,13 @@ class Container extends Component {
   }
 }
 
-export default connect(Container);
+export default connect(Container, {
+  title: 'Sample',
+  mapState: state => ({
+    ...state.module.sample,
+    isLoading: state.common.loadings.has('sample')
+  }),
+  mapDispatch: {
+    ...actions
+  }
+});

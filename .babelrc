@@ -24,14 +24,6 @@
         "import-require",
         "react-hot-loader/babel",
         [
-          "module-resolver",
-          {
-            "alias": {
-              "@module": "./client/module/"
-            }
-          }
-        ],
-        [
           "css-modules-transform",
           {
             "generateScopedName": "[local]_[sha1:hash:base64:5]",

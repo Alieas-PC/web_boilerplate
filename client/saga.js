@@ -1,6 +1,6 @@
 import { all, fork } from 'redux-saga/effects';
 
-import commonSaga from '@module/common/saga';
+import commonSaga from './module/common/saga';
 
 import { importDynamicSagas } from './util/dynamic-loader';
 
