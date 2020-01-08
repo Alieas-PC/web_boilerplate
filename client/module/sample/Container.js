@@ -5,8 +5,6 @@ import actions from './action';
 
 import style from './style.scss';
 
-console.log(actions);
-
 class Container extends Component {
   static title = 'Sample';
   static mapState = state => ({
