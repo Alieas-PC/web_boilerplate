@@ -23,6 +23,7 @@ class Container extends Component {
     const { isLoading } = this.props;
     return (
       <div className={style.container}>
+        <span>123</span>
         <Box px={2} py={2}>
           <Typography>This is a sample</Typography>
           <Button
