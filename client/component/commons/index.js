@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import connect from '@module/common/base';
+import connect from '../../module/common/base';
 
-import { setCommonState } from '@module/common/action';
+import { setCommonState } from '../../module/common/action';
 
 import Toast from '../../module/common/component/toast';
 

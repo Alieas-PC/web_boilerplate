@@ -4,7 +4,7 @@ import { moduleStateActionCreator } from '../common/action';
 export { setLoadingState, navTo, showToast } from '../common/action';
 
 /** Contants */
-export const PREFIX = '';
+export const PREFIX = 'SAMPLE';
 
 export const SUBMIT = createRequestTypes(`${PREFIX}_SUBMIT`);
 

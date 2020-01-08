@@ -29,11 +29,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.scss', '.css'],
-    alias: {
-      // shorten directories paths
-      '@module': path.resolve(__dirname, '..', 'client/module/')
-    }
+    extensions: ['.js', '.scss', '.css']
   },
   plugins: [
     new HtmlWebpackPlugin({

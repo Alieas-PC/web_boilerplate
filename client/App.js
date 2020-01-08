@@ -21,22 +21,6 @@ import * as style from './style.scss';
 import Commons from './component/commons';
 
 class App extends Component {
-  static mapState = ({ common: { redirectTo } }) => ({
-    redirectTo
-  });
-
-  static mapDispatch = dispatch => ({
-    ...bindActionCreators(
-      {
-        navTo,
-        setCommonState,
-        showToast
-      },
-      dispatch
-    ),
-    dispatch
-  });
-
   state = { routes };
 
   UNSAFE_componentWillMount() {
@@ -69,4 +53,22 @@ class App extends Component {
   }
 }
 
-export default hot(connect(App));
+export default hot(
+  connect(App, {
+    mapState: ({ common: { redirectTo } }) => ({
+      redirectTo
+    }),
+
+    mapDispatch: dispatch => ({
+      ...bindActionCreators(
+        {
+          navTo,
+          setCommonState,
+          showToast
+        },
+        dispatch
+      ),
+      dispatch
+    })
+  })
+);

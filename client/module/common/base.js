@@ -7,7 +7,7 @@ import Validator from '../../util/validationUtil';
 import utils from '../../util';
 import { i18n } from '../../component/i18n';
 
-const proxyHook = WrapperComponent =>
+const proxyHook = (WrapperComponent, injectProps) =>
   class BASE_HOC extends WrapperComponent {
     constructor(props) {
       super(props);
@@ -40,7 +40,7 @@ const proxyHook = WrapperComponent =>
 
     componentDidMount() {
       // proxy the cdm function of containers then we can modify dom title
-      const { title, i18nTitleKey } = WrapperComponent;
+      const { title, i18nTitleKey } = injectProps;
 
       if (i18nTitleKey) {
         this.setTitle(this.t(i18nTitleKey));
@@ -64,12 +64,12 @@ const proxyHook = WrapperComponent =>
  * wrap components with this magic HOC function
  * for some more useful functionalities
  */
-function connect(Component) {
-  const { fetchInitData, mapState, mapDispatch, form, formProps } = Component;
+function connect(Component, injectProps = {}) {
+  const { fetchInitData, mapState, mapDispatch, form, formProps } = injectProps;
 
   const oriCom = Component;
 
-  Component = proxyHook(Component);
+  Component = proxyHook(Component, injectProps);
 
   // supply this.props.location... etc.
   let WrapperComponent = withTranslation()(
