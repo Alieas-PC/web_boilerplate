@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Button, Box, Typography } from '@material-ui/core';
 
-import connect from '../common/base';
+import connect from 'common/dist/client/base';
 
 import actions from './action';
 
@@ -15,6 +15,7 @@ class Container extends Component {
 
   render() {
     const { isLoading } = this.props;
+
     return (
       <div className={style.container}>
         <Box px={2} py={2}>

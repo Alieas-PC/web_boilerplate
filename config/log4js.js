@@ -1,5 +1,5 @@
 const path = require('path');
-const { isDev } = require('../server/util/envUtil');
+const { isDev } = require('../server/utils/envUtil');
 
 const devConfig = {
   appenders: {

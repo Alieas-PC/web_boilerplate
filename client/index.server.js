@@ -10,11 +10,21 @@ import ReactDOMServer from 'react-dom/server';
 
 import { matchPath } from 'react-router-dom';
 
-import createStore from './store';
+import { createMemoryHistory } from 'history';
 
-import { routes } from './routes';
+import createStore from 'common/dist/client/store';
+
+import createRootReducer from './reducer';
+
+import rootSaga from './saga';
+
+import routes from './routes';
 
 import App from './App';
+
+const history = createMemoryHistory();
+
+const rootReducer = createRootReducer(history);
 
 const renderToHtml = (url, store, routerCtx = {}, sheets) => {
   return ReactDOMServer.renderToString(
@@ -42,4 +52,8 @@ const findMatch = path => {
   };
 };
 
-export default { renderToHtml, findMatch, createStore };
+export default {
+  renderToHtml,
+  findMatch,
+  createStore: state => createStore(rootReducer, rootSaga, state, history)
+};

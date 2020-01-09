@@ -1,4 +1,4 @@
-const fetchUtil = require('../util/fetchUtil');
+const fetchUtil = require('../utils/fetchUtil');
 
 const forwardRequest = async (ctx, url) => {
   try {

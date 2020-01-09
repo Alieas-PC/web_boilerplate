@@ -1,10 +1,10 @@
-const { isDev } = require('../server/util/envUtil');
+const { isDev } = require('../server/utils/envUtil');
 
 const gatewayCfg = require('./gatewaycfg');
 
 const cipher = require('./cipher');
 
-const logger = require('../server/util/logUtil');
+const logger = require('../server/utils/logUtil');
 
 const devConfig = {
   port: 3000,

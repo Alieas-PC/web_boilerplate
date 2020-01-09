@@ -9,20 +9,16 @@ import { bindActionCreators } from 'redux';
 import ClipboardJS from 'clipboard';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { navTo, setCommonState, showToast } from 'common/dist/client/action';
 
-import './component/i18n';
+import connect from 'common/dist/client/base';
 
-import { navTo, setCommonState, showToast } from './module/common/action';
+import { Commons } from 'common/dist/client/components';
 
-import connect from './module/common/base';
-
-import { routes } from './routes';
+import routes from './routes';
 
 import * as style from './style.scss';
-
-import Commons from './component/commons';
 
 const theme = createMuiTheme({
   overrides: {},

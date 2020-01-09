@@ -1,7 +1,5 @@
 const { ServerStyleSheets } = require('@material-ui/core/styles');
 
-const { createMemoryHistory } = require('history');
-
 const {
   renderToHtml,
   findMatch,
@@ -21,8 +19,6 @@ module.exports = (useServerRender = true) => {
 
     const sheets = new ServerStyleSheets();
 
-    const history = createMemoryHistory();
-
     if (useServerRender) {
       const { match, matchedRoute } = findMatch(ctx.path);
 
@@ -30,7 +26,7 @@ module.exports = (useServerRender = true) => {
         return next();
       }
 
-      const store = createStore(state, history);
+      const store = createStore(state);
 
       store.initApp(ctx);
 

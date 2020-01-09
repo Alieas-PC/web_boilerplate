@@ -59,7 +59,8 @@
     "redux": "^4.0.5",
     "redux-form": "^8.2.6",
     "redux-logger": "^3.0.6",
-    "redux-saga": "^1.1.3"
+    "redux-saga": "^1.1.3",
+    "common": "git+https://github.com/Alieas-PC/common.git"
   },
   "devDependencies": {
     "@hot-loader/react-dom": "^16.11.0",
