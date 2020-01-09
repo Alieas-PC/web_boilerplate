@@ -1,5 +1,5 @@
 const Router = require('koa-router');
-const forwardRequest = require('../controller/forward');
+const forwardRequest = require('../controllers/forward');
 const { gateway } = require('../../config');
 
 const router = new Router({ prefix: '/biz' });

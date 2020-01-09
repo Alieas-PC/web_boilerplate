@@ -1,5 +1,3 @@
-const { createMemoryHistory } = require('history');
-
 const {
   renderToHtml,
   findMatch,
@@ -17,8 +15,6 @@ module.exports = (useServerRender = true) => {
   return async (ctx, next) => {
     const state = {};
 
-    const history = createMemoryHistory();
-
     if (useServerRender) {
       const { match, matchedRoute } = findMatch(ctx.path);
 
@@ -26,7 +22,7 @@ module.exports = (useServerRender = true) => {
         return next();
       }
 
-      const store = createStore(state, history);
+      const store = createStore(state);
 
       store.initApp(ctx);
 

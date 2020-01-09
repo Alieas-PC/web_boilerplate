@@ -1,7 +1,11 @@
-import { createRequestTypes, makeActionCreator } from '../../util/reduxUtil';
-import { moduleStateActionCreator } from '../common/action';
+import {
+  createRequestTypes,
+  makeActionCreator
+} from 'common/dist/client/utils/reduxUtil';
 
-export { setLoadingState, navTo, showToast } from '../common/action';
+import { moduleStateActionCreator } from 'common/dist/client/action';
+
+export { setLoadingState, navTo, showToast } from 'common/dist/client/action';
 
 /** Contants */
 export const PREFIX = 'SAMPLE';

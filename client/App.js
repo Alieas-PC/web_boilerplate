@@ -8,17 +8,15 @@ import { bindActionCreators } from 'redux';
 
 import ClipboardJS from 'clipboard';
 
-import './component/i18n';
+import { navTo, setCommonState, showToast } from 'common/dist/client/action';
 
-import { navTo, setCommonState, showToast } from './module/common/action';
+import connect from 'common/dist/client/base';
 
-import connect from './module/common/base';
+import { Commons } from 'common/dist/client/components';
 
-import { routes } from './routes';
+import routes from './routes';
 
 import * as style from './style.scss';
-
-import Commons from './component/commons';
 
 class App extends Component {
   state = { routes };

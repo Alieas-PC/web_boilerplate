@@ -9,7 +9,7 @@ import fs from 'fs';
 import path from 'path';
 import camelCase from 'lodash.camelcase';
 
-import { isClient } from './index';
+import { isClient } from 'common/dist/client/utils';
 
 const recursiveMatch = (dir, filePattern, modules) => {
   const baseDir = path.resolve(__dirname, dir);
@@ -61,13 +61,13 @@ const importDynamicSagas = () => {
   let modules = [];
 
   if (isClient()) {
-    const resolve = require.context('../module', true, /saga\.js$/);
+    const resolve = require.context('../containers', true, /saga\.js$/);
 
     resolve.keys().forEach(key => {
       modules.push(resolve(key));
     });
   } else {
-    modules = Object.values(matchFiles('../module', /saga\.js$/, true));
+    modules = Object.values(matchFiles('../containers', /saga\.js$/, true));
   }
 
   return modules;
@@ -78,7 +78,7 @@ const importDynamicReducers = () => {
 
   if (isClient()) {
     const resolve = require.context(
-      '../module',
+      '../containers',
       true,
       /(?<!common)\/reducer\.js$/
     );
@@ -94,7 +94,7 @@ const importDynamicReducers = () => {
     });
   } else {
     const matched = matchFiles(
-      '../module',
+      '../containers',
       new RegExp('(?<!common)/reducer.js$'),
       true
     );

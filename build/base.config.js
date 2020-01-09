@@ -47,7 +47,7 @@ module.exports = {
         config.cipher.clientToServer.pubKey
       )
     }),
-    new CopyWebpackPlugin([path.resolve(__dirname, '../static/**/*')])
+    new CopyWebpackPlugin([path.resolve(__dirname, '../public/**/*')])
   ],
   node: {
     fs: 'empty',

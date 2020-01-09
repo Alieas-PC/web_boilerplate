@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import connect from '../common/base';
+import connect from 'common/dist/client/base';
 import actions from './action';
 
 import style from './style.scss';
@@ -11,6 +11,7 @@ class Container extends Component {
 
   render() {
     const { isLoading } = this.props;
+
     return (
       <div className={style.container}>
         This is a sample

@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const { gateway } = require('../../config');
 
-const fetchUtil = require('../util/fetchUtil');
+const fetchUtil = require('../utils/fetchUtil');
 
 module.exports = serverName => {
   const url = gateway.fileUploadServers[serverName];

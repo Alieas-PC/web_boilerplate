@@ -25,7 +25,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*Container.js', '*Container.**.js', 'client/App.js'],
+      files: ['client/containers/*/index.js','client/App.js'],
       rules: {
         'react/prop-types': false
       }

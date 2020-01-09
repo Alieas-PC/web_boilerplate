@@ -1,4 +1,4 @@
-import { createReducer } from '../../util/reduxUtil';
+import { createReducer } from 'common/dist/client/utils/reduxUtil';
 
 import { SET_MODULE_STATE } from './action';
 

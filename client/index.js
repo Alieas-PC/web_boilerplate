@@ -8,7 +8,11 @@ import { createBrowserHistory } from 'history';
 
 import { Provider } from 'react-redux';
 
-import createStore from './store';
+import createStore from 'common/dist/client/store';
+
+import createRootReducer from './reducer';
+
+import rootSaga from './saga';
 
 import App from './App';
 
@@ -17,13 +21,9 @@ const preloadedState =
 
 const history = createBrowserHistory();
 
-const store = createStore(
-  /**
-   * preloadedState
-   */
-  preloadedState,
-  history
-);
+const rootReducer = createRootReducer(history);
+
+const store = createStore(rootReducer, rootSaga, preloadedState, history);
 
 const renderDom = () => {
   const reactEle = (
