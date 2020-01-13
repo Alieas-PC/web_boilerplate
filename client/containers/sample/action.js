@@ -3,9 +3,12 @@ import {
   makeActionCreator
 } from 'common/dist/client/utils/reduxUtil';
 
-import { moduleStateActionCreator } from 'common/dist/client/action';
-
-export { setLoadingState, navTo, showToast } from 'common/dist/client/action';
+import {
+  moduleStateActionCreator,
+  setLoadingState,
+  navTo,
+  showToast
+} from 'common/dist/client/action';
 
 /** Contants */
 export const PREFIX = 'SAMPLE';
@@ -20,5 +23,8 @@ export const { SET_MODULE_STATE, setModuleState } = moduleStateActionCreator(
 const submit = makeActionCreator(SUBMIT.REQUEST);
 
 export default {
+  setLoadingState,
+  navTo,
+  showToast,
   submit
 };

@@ -8,11 +8,12 @@ const {
 
 const config = require('../../config');
 
-const API_PREFIX = '/api/';
-
-module.exports = (useServerRender = true) => {
+module.exports = (useServerRender = true, apiPrefix) => {
   // add domain field onto process.env so that fetchUtil can use it to prefix requests's urls.
   process.env.domain = config.domain;
+
+  // eslint-disable-next-line global-require
+  const stats = require('../../dist/react-loadable.json');
 
   return async (ctx, next) => {
     const state = {};
@@ -30,9 +31,25 @@ module.exports = (useServerRender = true) => {
 
       store.initApp(ctx);
 
-      if (typeof matchedRoute.Component.fetchInitData === 'function') {
+      let fetchInit = null;
+
+      if (matchedRoute.async) {
+        const component = (await matchedRoute.loader.preload()).default;
+
+        if (typeof component.fetchInitData === 'function') {
+          fetchInit = component.fetchInitData;
+        }
+      } else {
+        const { component } = matchedRoute;
+
+        if (typeof component.fetchInitData === 'function') {
+          fetchInit = component.fetchInitData;
+        }
+      }
+
+      if (fetchInit) {
         store.dispatch(
-          matchedRoute.Component.fetchInitData({
+          fetchInit({
             match,
             state: store.getState()
           })
@@ -43,7 +60,13 @@ module.exports = (useServerRender = true) => {
 
       const routerCtx = {};
 
-      const html = renderToHtml(ctx.url, store, routerCtx, sheets);
+      const { html, bundles } = renderToHtml(
+        ctx.url,
+        store,
+        routerCtx,
+        stats,
+        sheets
+      );
 
       // there's a redirect action triggered from saga
       if (routerCtx.url) {
@@ -57,12 +80,15 @@ module.exports = (useServerRender = true) => {
       // wait for the promise's return
       await ctx.render('index.generated', {
         html,
+        bundlesTags: bundles
+          .map(bundle => `<script src="${bundle.publicPath}"></script>`)
+          .join('\n'),
         state: store.getState(),
         styles: sheets.toString()
       });
 
       return null;
-    } else if (!ctx.path.startsWith(API_PREFIX)) {
+    } else if (!ctx.path.startsWith(apiPrefix)) {
       const { matchedRoute } = findMatch(ctx.path);
 
       if (!matchedRoute) {

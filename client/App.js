@@ -6,15 +6,15 @@ import { hot } from 'react-hot-loader/root';
 
 import { bindActionCreators } from 'redux';
 
-import ClipboardJS from 'clipboard';
-
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { navTo, setCommonState, showToast } from 'common/dist/client/action';
 
 import connect from 'common/dist/client/base';
 
 import { Commons } from 'common/dist/client/components';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import routes from './routes';
 
@@ -27,8 +27,6 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
-  state = { routes };
-
   UNSAFE_componentWillMount() {
     this.props.setCommonState({
       // avoid 'has' method missing while server output a Set of state to the client
@@ -42,10 +40,6 @@ class App extends Component {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
-
-    new ClipboardJS('.copy').on('success', () => {
-      this.props.showToast({ msg: '已复制' });
-    });
   }
 
   render() {
@@ -54,14 +48,21 @@ class App extends Component {
     return (
       <div className={style.container}>
         {redirectTo ? <Redirect to={redirectTo} /> : null}
-        <Commons />
+        <Commons includes={[Commons.Types.Toast, Commons.Types.Copy]} />
         <CssBaseline />
         <ThemeProvider theme={theme}>
-          <Switch>
-            {this.state.routes.map(({ path, Component: C, key }) => (
-              <Route exact key={key || path} path={path} component={C} />
-            ))}
-          </Switch>
+        <Switch>
+          {routes.map(({ path, component, async, loader, key }) => {
+            return (
+              <Route
+                exact
+                key={key || path}
+                path={path}
+                component={async ? loader : component}
+              />
+            );
+          })}
+        </Switch>
         </ThemeProvider>
       </div>
     );

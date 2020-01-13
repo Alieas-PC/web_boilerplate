@@ -5,12 +5,31 @@ import { Button, Box, Typography } from '@material-ui/core';
 import connect from 'common/dist/client/base';
 
 import actions from './action';
-
 import style from './style.scss';
 
 class Container extends Component {
+  onSuccess = (res, modelName) => {
+    console.log(res, modelName);
+    if (modelName === 'user') {
+      this.props.showToast({ msg: '用户添加成功' });
+    }
+  };
+
+  onError = (e, res, modelName) => {
+    console.log(e, res, modelName);
+    if (modelName === 'user') {
+      this.props.showToast({ msg: '用户添加成功' });
+    }
+  };
+
   navTo = path => () => {
     this.props.navTo({ path });
+  };
+
+  saveUser = () => {
+    this.model.create('user', {
+      username: 'friday'
+    });
   };
 
   render() {
@@ -27,6 +46,8 @@ class Container extends Component {
             Test a network invocation
             {isLoading ? '...' : ''}
           </Button>
+          <Button onClick={this.saveUser}>create a user</Button>
+          <Button onClick={this.navTo('/login')}>nav to login</Button>
         </Box>
       </div>
     );

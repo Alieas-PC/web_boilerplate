@@ -8,11 +8,15 @@ import { Provider } from 'react-redux';
 
 import ReactDOMServer from 'react-dom/server';
 
+import Loadable from 'react-loadable';
+
+import { getBundles } from 'react-loadable/webpack';
+
 import { matchPath } from 'react-router-dom';
 
 import { createMemoryHistory } from 'history';
 
-import createStore from 'common/dist/client/store';
+import { createStore as _createStore } from 'common/dist/client/store';
 
 import createRootReducer from './reducer';
 
@@ -26,19 +30,27 @@ const history = createMemoryHistory();
 
 const rootReducer = createRootReducer(history);
 
-const renderToHtml = (url, store, routerCtx = {}, sheets) => {
-  return ReactDOMServer.renderToString(
+export const renderToHtml = (url, store, routerCtx = {}, stats, sheets) => {
+  const modules = [];
+
+  const html = ReactDOMServer.renderToString(
     sheets.collect(
-      <Provider store={store}>
-        <StaticRouter location={url} context={routerCtx}>
-          <App />
-        </StaticRouter>
-      </Provider>
+      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+        <Provider store={store}>
+          <StaticRouter location={url} context={routerCtx}>
+            <App />
+          </StaticRouter>
+        </Provider>
+      </Loadable.Capture>
     )
   );
+
+  const bundles = getBundles(stats, modules);
+
+  return { html, bundles };
 };
 
-const findMatch = path => {
+export const findMatch = path => {
   let match = null;
 
   const matchedRoute = routes.find(route => {
@@ -52,8 +64,5 @@ const findMatch = path => {
   };
 };
 
-export default {
-  renderToHtml,
-  findMatch,
-  createStore: state => createStore(rootReducer, rootSaga, state, history)
-};
+export const createStore = state =>
+  _createStore(rootReducer, rootSaga, state, history);
