@@ -1,4 +1,6 @@
-const logger = require('../server/utils/logUtil');
+const { getLogger } = require('common/dist/server/log');
+
+const logger = getLogger();
 
 const deployEnv = process.env.DEPLOY_ENV;
 

@@ -1,30 +1,59 @@
 const path = require('path');
-const koaWebpack = require('koa-webpack');
 const { AppServer } = require('common');
+const webpack = require('webpack');
+const koaWebpack = require('koa-webpack');
+const { isPrd } = require('common/dist/server/utils');
+const Loadable = require('react-loadable');
 const render = require('./middlewares/render');
 const webpackCfg = require('../build/dev.config.js');
 const servCfg = require('../config');
-const { isPrd } = require('./utils/envUtil');
 
 const app = new AppServer({
-  projectRoot: path.resolve(__dirname, '..'),
   assetsDir: path.resolve(__dirname, '../dist/client')
 });
 
 if (!isPrd()) {
+  const compiler = webpack(webpackCfg);
+
   koaWebpack({
-    config: webpackCfg,
-    devMiddleware: {},
+    compiler,
+    devMiddleware: {
+      serverSideRender: servCfg.useSSR
+    },
     hotClient: {
       port: servCfg.hotPort
     }
   }).then(middleware => {
     app.use(middleware);
   });
+
+  // wait for the first compilation ends
+  let isFirstTime = true;
+
+  compiler.hooks.emit.tap('rljson', () => {
+    if (isFirstTime) {
+      isFirstTime = false;
+
+      app.use(render(servCfg.useSSR, '/api/'));
+
+      // app.useModels(path.resolve(__dirname, './models'), servCfg.db);
+
+      // app.useRoutes(path.resolve(__dirname, './routes'));
+
+      Loadable.preloadAll().then(() => {
+        app.listen(servCfg.port);
+      });
+    }
+  });
+} else {
+  // react loadable json has been generated before.
+  app.use(render(servCfg.useSSR, '/api/'));
+
+  // app.useModels(path.resolve(__dirname, './models'), servCfg.db);
+
+  // app.useRoutes(path.resolve(__dirname, './routes'));
+
+  Loadable.preloadAll().then(() => {
+    app.listen(servCfg.port);
+  });
 }
-
-app.use(render(servCfg.useSSR));
-
-app.useRoutes(path.resolve(__dirname, './routes'));
-
-app.listen(servCfg.port);

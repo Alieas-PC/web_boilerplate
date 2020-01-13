@@ -4,11 +4,13 @@ import ReactDOM from 'react-dom';
 
 import { ConnectedRouter } from 'connected-react-router';
 
+import Loadable from 'react-loadable';
+
 import { createBrowserHistory } from 'history';
 
 import { Provider } from 'react-redux';
 
-import createStore from 'common/dist/client/store';
+import { createStore } from 'common/dist/client/store';
 
 import createRootReducer from './reducer';
 
@@ -36,8 +38,10 @@ const renderDom = () => {
   const container = document.querySelector('#root');
   // we assume it is server side render if the preloadedState is not empty.
   if (preloadedState && Object.keys(preloadedState).length !== 0) {
-    ReactDOM.hydrate(reactEle, container, () => {
-      store.initApp();
+    Loadable.preloadReady().then(() => {
+      ReactDOM.hydrate(reactEle, container, () => {
+        store.initApp();
+      });
     });
   } else {
     ReactDOM.render(reactEle, container, () => {

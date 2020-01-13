@@ -6,8 +6,6 @@ import { hot } from 'react-hot-loader/root';
 
 import { bindActionCreators } from 'redux';
 
-import ClipboardJS from 'clipboard';
-
 import { navTo, setCommonState, showToast } from 'common/dist/client/action';
 
 import connect from 'common/dist/client/base';
@@ -19,18 +17,10 @@ import routes from './routes';
 import * as style from './style.scss';
 
 class App extends Component {
-  state = { routes };
-
   UNSAFE_componentWillMount() {
     this.props.setCommonState({
       // avoid 'has' method missing while server output a Set of state to the client
       loadings: new Set()
-    });
-  }
-
-  componentDidMount() {
-    new ClipboardJS('.copy').on('success', () => {
-      this.props.showToast({ msg: '已复制' });
     });
   }
 
@@ -42,9 +32,16 @@ class App extends Component {
         {redirectTo ? <Redirect to={redirectTo} /> : null}
         <Commons />
         <Switch>
-          {this.state.routes.map(({ path, Component: C, key }) => (
-            <Route exact key={key || path} path={path} component={C} />
-          ))}
+          {routes.map(({ path, component, async, loader, key }) => {
+            return (
+              <Route
+                exact
+                key={key || path}
+                path={path}
+                component={async ? loader : component}
+              />
+            );
+          })}
         </Switch>
       </div>
     );

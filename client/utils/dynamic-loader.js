@@ -57,14 +57,14 @@ const matchFiles = (dir, filePattern, useSubdirectories) => {
   return modules;
 };
 
-const importDynamicSagas = () => {
+export const importDynamicSagas = () => {
   let modules = [];
 
   if (isClient()) {
     const resolve = require.context('../containers', true, /saga\.js$/);
 
     resolve.keys().forEach(key => {
-      modules.push(resolve(key));
+      modules.push(resolve(key).default);
     });
   } else {
     modules = Object.values(matchFiles('../containers', /saga\.js$/, true));
@@ -73,7 +73,7 @@ const importDynamicSagas = () => {
   return modules;
 };
 
-const importDynamicReducers = () => {
+export const importDynamicReducers = () => {
   let modules = {};
 
   if (isClient()) {
@@ -90,7 +90,7 @@ const importDynamicReducers = () => {
       );
 
       const reducerName = camelCase(basename);
-      modules[reducerName] = resolve(key);
+      modules[reducerName] = resolve(key).default;
     });
   } else {
     const matched = matchFiles(
@@ -108,9 +108,4 @@ const importDynamicReducers = () => {
     }, {});
   }
   return modules;
-};
-
-export default {
-  importDynamicReducers,
-  importDynamicSagas
 };

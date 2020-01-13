@@ -1,4 +1,4 @@
-const fetchUtil = require('../utils/fetchUtil');
+const requester = require('common/dist/server/request');
 
 const forwardRequest = async (ctx, url) => {
   try {
@@ -18,7 +18,7 @@ const forwardRequest = async (ctx, url) => {
       `Forward request Body => ${JSON.stringify(ctx.request.body)}`
     );
 
-    const res = await fetchUtil[method.toLowerCase()](
+    const res = await requester[method.toLowerCase()](
       url,
       data,
       ctx.request.type

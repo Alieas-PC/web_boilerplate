@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const { gateway } = require('../../config');
 
-const fetchUtil = require('../utils/fetchUtil');
+const requester = require('common/dist/server/request');
 
 module.exports = serverName => {
   const url = gateway.fileUploadServers[serverName];
@@ -34,7 +34,7 @@ module.exports = serverName => {
             ctx.logger.info('File uploading begins.');
 
             // eslint-disable-next-line no-await-in-loop
-            const { data, responseCode } = await fetchUtil.post(url, postData);
+            const { data, responseCode } = await requester.post(url, postData);
 
             ctx.logger.info('Response data =>', data);
 

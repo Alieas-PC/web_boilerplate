@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const config = require('../config');
 
 module.exports = {
@@ -32,6 +33,9 @@ module.exports = {
     extensions: ['.js', '.scss', '.css']
   },
   plugins: [
+    new ReactLoadablePlugin({
+      filename: './dist/react-loadable.json'
+    }),
     new HtmlWebpackPlugin({
       filename: 'index.generated.html',
       template: './html/index.html',
