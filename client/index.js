@@ -36,17 +36,15 @@ const renderDom = () => {
     </Provider>
   );
   const container = document.querySelector('#root');
+
+  store.initApp();
   // we assume it is server side render if the preloadedState is not empty.
   if (preloadedState && Object.keys(preloadedState).length !== 0) {
     Loadable.preloadReady().then(() => {
-      ReactDOM.hydrate(reactEle, container, () => {
-        store.initApp();
-      });
+      ReactDOM.hydrate(reactEle, container);
     });
   } else {
-    ReactDOM.render(reactEle, container, () => {
-      store.initApp();
-    });
+    ReactDOM.render(reactEle, container);
   }
 };
 

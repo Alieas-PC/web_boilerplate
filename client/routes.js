@@ -9,14 +9,6 @@ const routes = [
       loader: () => import('./containers/sample'),
       loading: Loading
     })
-  },
-  {
-    path: '/login',
-    async: true,
-    loader: Loadable({
-      loader: () => import('./containers/login'),
-      loading: Loading
-    })
   }
 ];
 

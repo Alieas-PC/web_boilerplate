@@ -8,6 +8,18 @@ const render = require('./middlewares/render');
 const webpackCfg = require('../build/dev.config.js');
 const servCfg = require('../config');
 
+function startServer(app) {
+  app.use(render(servCfg.useSSR, '/api/'));
+
+  app.useModels(path.resolve(__dirname, './models'), servCfg.db);
+
+  app.useRoutes(path.resolve(__dirname, './routes'));
+
+  Loadable.preloadAll().then(() => {
+    app.listen(servCfg.port);
+  });
+}
+
 const app = new AppServer({
   assetsDir: path.resolve(__dirname, '../dist/client')
 });
@@ -34,26 +46,9 @@ if (!isPrd()) {
     if (isFirstTime) {
       isFirstTime = false;
 
-      app.use(render(servCfg.useSSR, '/api/'));
-
-      // app.useModels(path.resolve(__dirname, './models'), servCfg.db);
-
-      // app.useRoutes(path.resolve(__dirname, './routes'));
-
-      Loadable.preloadAll().then(() => {
-        app.listen(servCfg.port);
-      });
+      startServer(app);
     }
   });
 } else {
-  // react loadable json has been generated before.
-  app.use(render(servCfg.useSSR, '/api/'));
-
-  // app.useModels(path.resolve(__dirname, './models'), servCfg.db);
-
-  // app.useRoutes(path.resolve(__dirname, './routes'));
-
-  Loadable.preloadAll().then(() => {
-    app.listen(servCfg.port);
-  });
+  startServer(app);
 }

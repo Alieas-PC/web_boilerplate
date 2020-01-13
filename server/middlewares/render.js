@@ -27,12 +27,25 @@ module.exports = (useServerRender = true, apiPrefix) => {
 
       store.initApp(ctx);
 
-      if (
-        matchedRoute.component &&
-        typeof matchedRoute.component.fetchInitData === 'function'
-      ) {
+      let fetchInit = null;
+
+      if (matchedRoute.async) {
+        const component = (await matchedRoute.loader.preload()).default;
+
+        if (typeof component.fetchInitData === 'function') {
+          fetchInit = component.fetchInitData;
+        }
+      } else {
+        const { component } = matchedRoute;
+
+        if (typeof component.fetchInitData === 'function') {
+          fetchInit = component.fetchInitData;
+        }
+      }
+
+      if (fetchInit) {
         store.dispatch(
-          matchedRoute.component.fetchInitData({
+          fetchInit({
             match,
             state: store.getState()
           })

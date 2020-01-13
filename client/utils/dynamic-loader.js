@@ -23,7 +23,7 @@ const recursiveMatch = (dir, filePattern, modules) => {
       const module = eval(`require('${fullPath}')`);
       // const module = require(baseDir + path.sep + file.name);
 
-      modules[fullPath] = module;
+      modules[fullPath] = module.default;
     }
 
     if (file.isDirectory()) {
@@ -49,7 +49,7 @@ const matchFiles = (dir, filePattern, useSubdirectories) => {
         const module = eval(`require('${fullPath}')`);
         // const module = require(baseDir + path.sep + file.name);
 
-        modules[fullPath] = module;
+        modules[fullPath] = module.default;
       }
     });
   }

@@ -30,7 +30,7 @@ class App extends Component {
     return (
       <div className={style.container}>
         {redirectTo ? <Redirect to={redirectTo} /> : null}
-        <Commons />
+        <Commons includes={[Commons.Types.Toast, Commons.Types.Copy]} />
         <Switch>
           {routes.map(({ path, component, async, loader, key }) => {
             return (
