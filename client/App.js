@@ -14,7 +14,7 @@ import { Commons } from 'common/dist/client/components';
 
 import routes from './routes';
 
-import * as style from './style.scss';
+import style from './style.scss';
 
 class App extends Component {
   UNSAFE_componentWillMount() {
