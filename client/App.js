@@ -18,7 +18,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import routes from './routes';
 
-import * as style from './style.scss';
+import style from './style.scss';
 
 const theme = createMuiTheme({
   overrides: {},
