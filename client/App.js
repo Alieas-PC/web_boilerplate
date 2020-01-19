@@ -51,18 +51,18 @@ class App extends Component {
         <Commons includes={[Commons.Types.Toast, Commons.Types.Copy]} />
         <CssBaseline />
         <ThemeProvider theme={theme}>
-        <Switch>
-          {routes.map(({ path, component, async, loader, key }) => {
-            return (
-              <Route
-                exact
-                key={key || path}
-                path={path}
-                component={async ? loader : component}
-              />
-            );
-          })}
-        </Switch>
+          <Switch>
+            {routes.map(({ path, component, async, loader, key }) => {
+              return (
+                <Route
+                  exact
+                  key={key || path}
+                  path={path}
+                  component={async ? loader : component}
+                />
+              );
+            })}
+          </Switch>
         </ThemeProvider>
       </div>
     );
