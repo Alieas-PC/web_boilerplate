@@ -4,7 +4,10 @@ const baseConfig = require('./base.config');
 
 module.exports = merge(baseConfig, {
   // hot-client
-  entry: ['./client/polyfills.js', './client/index.js'],
+  entry: {
+    index: ['./client/index.js'],
+    polyfills: ['./client/polyfills.js']
+  },
   mode: 'development',
   devtool: 'inline-source-map',
   module: {

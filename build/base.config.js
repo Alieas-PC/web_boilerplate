@@ -39,7 +39,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.generated.html',
       template: './html/index.html',
-      chunks: ['index', 'main'],
+      chunks: ['index'],
       alwaysWriteToDisk: true
     }),
     new HtmlWebpackHarddiskPlugin(),
