@@ -62,6 +62,7 @@ typings/
 
 # built files
 dist
+dist_tmp
 
 # reserve app process id
 .pid
