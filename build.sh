@@ -1,7 +1,7 @@
 #!/bin/sh
 git pull
 
-export APP_NAME=plan_web
+export APP_NAME=web
 export NODE_ENV=production
 
 export BUILD_ID=DONTKILLME
@@ -55,8 +55,8 @@ setup() {
 #setup();
 
 pm2_setup() {
-    pm2 restart ./ecosystem.config.js --env production
-    echo pm restart $APP_NAME
+    pm2 reload ./ecosystem.config.js --env production
+    echo pm reload $APP_NAME
 }
 
 pm2_setup

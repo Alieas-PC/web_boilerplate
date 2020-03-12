@@ -1,5 +1,7 @@
+const path = require('path');
 const merge = require('webpack-merge');
 const autoprefixer = require('autoprefixer');
+const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const baseConfig = require('./base.config');
 
 module.exports = merge(baseConfig, {
@@ -7,6 +9,11 @@ module.exports = merge(baseConfig, {
   entry: {
     index: ['./client/index.js'],
     polyfills: ['./client/polyfills.js']
+  },
+  output: {
+    path: path.resolve(__dirname, '../dist/client'),
+    filename: '[name].bundle.js',
+    publicPath: '/'
   },
   mode: 'development',
   devtool: 'inline-source-map',
@@ -70,5 +77,10 @@ module.exports = merge(baseConfig, {
     alias: {
       'react-dom': '@hot-loader/react-dom'
     }
-  }
+  },
+  plugins: [
+    new ReactLoadablePlugin({
+      filename: './dist/react-loadable.json'
+    })
+  ]
 });

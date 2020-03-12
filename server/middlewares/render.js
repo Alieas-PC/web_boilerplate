@@ -1,3 +1,4 @@
+const { extname } = require('path');
 const {
   renderToHtml,
   findMatch,
@@ -71,7 +72,11 @@ module.exports = (useServerRender = true, apiPrefix) => {
       await ctx.render('index.generated', {
         html,
         bundlesTags: bundles
-          .map(bundle => `<script src="${bundle.publicPath}"></script>`)
+          .map(bundle =>
+            extname(bundle.publicPath) === '.css'
+              ? `<link href="${bundle.publicPath}" rel="stylesheet" />`
+              : `<script src="${bundle.publicPath}"></script>`
+          )
           .join('\n'),
         state: store.getState()
       });

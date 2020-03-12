@@ -3,18 +3,12 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const config = require('../config');
 
 module.exports = {
   entry: {
     index: './client/index.js',
     polyfills: './client/polyfills.js'
-  },
-  output: {
-    path: path.resolve(__dirname, '../dist/client'),
-    filename: '[name].bundle.js',
-    publicPath: '/'
   },
   module: {
     rules: [
@@ -33,9 +27,6 @@ module.exports = {
     extensions: ['.js', '.scss', '.css']
   },
   plugins: [
-    new ReactLoadablePlugin({
-      filename: './dist/react-loadable.json'
-    }),
     new HtmlWebpackPlugin({
       filename: 'index.generated.html',
       template: './html/index.html',

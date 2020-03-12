@@ -1,10 +1,18 @@
+const path = require('path');
 const autoprefixer = require('autoprefixer');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { ReactLoadablePlugin } = require('react-loadable/webpack');
 const baseConfig = require('./base.config');
 
 module.exports = merge(baseConfig, {
+  output: {
+    path: path.resolve(__dirname, '../dist_tmp/client'),
+    filename: '[name].bundle.js',
+    publicPath: '/'
+  },
   mode: 'production',
+
   module: {
     rules: [
       {
@@ -59,6 +67,9 @@ module.exports = merge(baseConfig, {
     new MiniCssExtractPlugin({
       filename: '[name].[hash].css',
       chunkFilename: '[id].[hash].css'
+    }),
+    new ReactLoadablePlugin({
+      filename: './dist_tmp/react-loadable.json'
     })
   ]
 });

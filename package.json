@@ -4,10 +4,11 @@
   "description": "react app",
   "main": "server/app.js",
   "scripts": {
-    "clean": "rm -rf ./dist",
-    "build": "npm run clean && npm-run-all -p compile:server:prd compile:client:prd",
+    "mv": "rm -rf ./dist && mv ./dist_tmp ./dist",
+    "clean": "rm -rf ./dist_tmp",
+    "build": "npm run clean && npm-run-all -p compile:server:prd compile:client:prd && npm run mv",
     "start": "cross-env NODE_ENV=production node ./server/app.js",
-    "compile:server:prd": "cross-env BABEL_ENV=server babel ./client --out-dir ./dist/server",
+    "compile:server:prd": "cross-env BABEL_ENV=server babel ./client --out-dir ./dist_tmp/server",
     "compile:client:prd": "cross-env BABEL_ENV=client NODE_ENV=production webpack --config ./build/prd.config.js --progress",
     "dev": "cross-env BABEL_ENV=server NODE_ENV=development gulp -f ./gulpfile.js"
   },
