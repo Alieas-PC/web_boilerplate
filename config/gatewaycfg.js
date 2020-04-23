@@ -6,7 +6,7 @@ const deployEnv = process.env.DEPLOY_ENV;
 
 const prd = {
   biz: {
-    urlPrefix: 'http://152.32.251.57:11919/leader-service'
+    urlPrefix: 'http://localhost:8080/biz'
   },
   fileUploadServers: {
     server1: ''
@@ -15,7 +15,7 @@ const prd = {
 
 const dev = {
   biz: {
-    urlPrefix: 'http://192.168.31.173:11919/leader-service'
+    urlPrefix: 'http://localhost:8080/biz'
   },
   fileUploadServers: {
     server1: ''
