@@ -11,7 +11,7 @@ const servCfg = require('../config');
 function startServer(app) {
   app.use(render(servCfg.useSSR, '/api/'));
 
-  app.useModels(path.resolve(__dirname, './models'), servCfg.db);
+  // app.useModels(path.resolve(__dirname, './models'), servCfg.db);
 
   app.useRoutes(path.resolve(__dirname, './routes'));
 

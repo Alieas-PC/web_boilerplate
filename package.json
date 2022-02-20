@@ -17,7 +17,7 @@
     "node": ">=10.x"
   },
   "dependencies": {
-    "common": "git+https://github.com/Alieas-PC/common.git",
+    "common": "git+https://github.com/fridaythx/common.git",
     "connected-react-router": "^6.6.1",
     "history": "^4.7.2",
     "i18next": "^19.0.0",
